@@ -154,9 +154,7 @@ const response = await fetch('https://your-worker.your-account.workers.dev/v1bet
 
 ## 🎯 快速部署按钮
 
-[![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/YOUR_USERNAME/YOUR_REPO_NAME)
-
-将上面的链接中的`YOUR_USERNAME`和`YOUR_REPO_NAME`替换为您的GitHub用户名和仓库名。
+[![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/dkfghrdso/gemini-proxy)
 
 ## 🔧 手动部署步骤
 
@@ -166,8 +164,8 @@ const response = await fetch('https://your-worker.your-account.workers.dev/v1bet
 
 ```bash
 # 克隆仓库
-git clone https://github.com/YOUR_USERNAME/YOUR_REPO_NAME
-cd YOUR_REPO_NAME
+git clone https://github.com/dkfghrdso/gemini-proxy
+cd gemini-proxy
 
 # 安装依赖
 npm install

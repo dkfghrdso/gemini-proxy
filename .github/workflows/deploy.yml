@@ -1,0 +1,58 @@
+name: Deploy to Cloudflare Workers
+
+on:
+  # 允许手动触发部署
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: '部署环境'
+        required: true
+        default: 'production'
+        type: choice
+        options:
+        - production
+        - staging
+  # 当推送到main分支时自动部署
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Deploy to Cloudflare Workers
+      run: |
+        # 安装wrangler
+        npm install -g wrangler
+        
+        # 部署到指定环境
+        if [ "${{ github.event.inputs.environment }}" = "staging" ]; then
+          npx wrangler deploy --env staging
+        else
+          npx wrangler deploy --env production
+        fi
+      env:
+        CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+        CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+
+    - name: Notify deployment status
+      if: always()
+      run: |
+        if [ "${{ job.status }}" = "success" ]; then
+          echo "✅ 部署成功！"
+        else
+          echo "❌ 部署失败，请检查日志"
+        fi
