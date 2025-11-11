@@ -1,33 +1,25 @@
 # Cloudflare Workers配置 - Google Gemini代理
+# 兼容wrangler v4格式
+
 name = "gemini-proxy-worker"
 main = "index.js"
 compatibility_date = "2024-01-01"
 
 # 环境变量配置
-[env.production.vars]
-# 自定义域名配置 - 默认为Google Gemini官方域名
-# 您可以在Cloudflare Dashboard中修改此值
+[vars]
 CUSTOM_DOMAIN = "generativelanguage.googleapis.com"
 
-# 部署配置
+# 兼容性标志（正确格式）
+compatibility_flags = ["nodejs_compat"]
+
+# 生产环境配置
 [env.production]
-# 如果您有自定义域名，可以在这里配置
-# routes = [
-#   { pattern = "*.your-domain.com", custom_domain = true }
-# ]
+
+[vars.production]
+CUSTOM_DOMAIN = "generativelanguage.googleapis.com"
 
 # 开发环境配置
-[env.development.vars]
+[env.development]
+
+[vars.development]
 CUSTOM_DOMAIN = "generativelanguage.googleapis.com"
-
-# 日志配置
-[log]
-level = "info"
-
-# 限制配置
-[limits]
-cpu_ms = 50
-
-# 兼容性标志
-[compatibility_flags]
-nodejs_compat = true
